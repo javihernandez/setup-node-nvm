@@ -28,6 +28,7 @@ async function resolveVersion(version, mirror, arch) {
   let mirror = core.getInput("node-mirror") || "https://nodejs.org/dist/";
   let arch = core.getInput("node-arch") || ""; // Nothing will default to x64
   let version = await resolveVersion(core.getInput("node-version"), mirror, arch);
+  console.log("## version: ", version);
   if (process.platform == "win32") {
     runScript("powershell", ".\\install.ps1", version, mirror);
   } else {

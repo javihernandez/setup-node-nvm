@@ -1,3 +1,4 @@
+echo "args $args[0]"
 $NVM_HOME="$((Get-Location).Path)\mynvm"
 $env:NVM_HOME=$NVM_HOME
 $env:NVM_PATH=$NVM_HOME
