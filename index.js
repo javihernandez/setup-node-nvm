@@ -25,8 +25,9 @@ async function resolveVersion(version, mirror) {
 (async () => {
   let mirror = core.getInput("node-mirror") || "https://nodejs.org/dist/";
   let version = await resolveVersion(core.getInput("node-version"), mirror);
+  let arch = core.getInput("node-arch") || ""; // Nothing will default to x64
   if (process.platform == "win32") {
-    runScript("powershell", ".\\install.ps1", version, mirror);
+    runScript("powershell", ".\\install.ps1", version, mirror, arch);
   } else {
     runScript("bash", "install.sh", version, mirror);
   }
