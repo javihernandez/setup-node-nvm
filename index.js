@@ -5,7 +5,7 @@ const semver = require("semver");
 const nv = require("@pkgjs/nv");
 
 // Utilize @pkgjs/nv to resolve before forwarding to nvm / nvm-windows
-async function resolveVersion(version, mirror) {
+async function resolveVersion(version, mirror, arch) {
   if (version) {
     let query = version;
     switch (query) {
@@ -19,15 +19,15 @@ async function resolveVersion(version, mirror) {
       return versions[0].version;
     }
   }
-  return version;
+  return arch? version.concat(" ", arch) : version;
 }
 
 (async () => {
   let mirror = core.getInput("node-mirror") || "https://nodejs.org/dist/";
-  let version = await resolveVersion(core.getInput("node-version"), mirror);
   let arch = core.getInput("node-arch") || ""; // Nothing will default to x64
+  let version = await resolveVersion(core.getInput("node-version"), mirror, arch);
   if (process.platform == "win32") {
-    runScript("powershell", ".\\install.ps1", version, mirror, arch);
+    runScript("powershell", ".\\install.ps1", version, mirror);
   } else {
     runScript("bash", "install.sh", version, mirror);
   }
