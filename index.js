@@ -19,7 +19,9 @@ async function resolveVersion(version, mirror, arch) {
       return versions[0].version;
     }
   }
-  return arch? version.concat(" ", arch) : version;
+  let full_version = arch? version.concat(" ", arch) : version;
+  console.log("## full_version: ", full_version);
+  return full_version;
 }
 
 (async () => {
