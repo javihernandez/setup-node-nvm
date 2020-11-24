@@ -1,9 +1,5 @@
 name: Test
-on:
-  push:
-    branches:
-    - master
-  pull_request:
+on: [push]
 jobs:
   linux-lts:
     runs-on: ubuntu-latest
@@ -12,6 +8,7 @@ jobs:
     - uses: ./
       with:
         node-version: lts/*
+        node-arch: "32" 
     - name: Check
       run: |
         which node
@@ -151,6 +148,7 @@ jobs:
     - uses: ./
       with:
         node-version: lts/*
+        node-arch: "32"
     - name: Check
       run: |
         node -v
