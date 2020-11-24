@@ -29,13 +29,13 @@ async function resolveVersion(version, mirror) {
   if (process.platform == "win32") {
     runScript("powershell", ".\\install.ps1", version, mirror, arch);
   } else {
-    if (arch) core.setFailed("Invalid input parameter: node-arch");
-    runScript("bash", "install.sh", version, mirror);
+    runScript("bash", "install.sh", version, mirror, arch);
   }
 })();
 
 // arch only applies to Windows platform, so it will throw on both GNU/Linux and macOS when provided
 function runScript(shell, script, version, mirror, arch) {
+  if (arch && process.platform != "win32") throw Error ("Ivalid input parameter: node-arch");
   const child = child_process.spawn(shell, [ script, version, mirror, arch ], { cwd: __dirname });
   const stdout = [];
   child.stdout.on("data", out => {
