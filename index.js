@@ -29,7 +29,7 @@ async function resolveVersion(version, mirror) {
   if (process.platform == "win32") {
     runScript("powershell", ".\\install.ps1", version, mirror, arch);
   } else {
-    if (arch) throw Error("Invalid input parameter: node-arch");
+    if (arch) core.setFailed("Invalid input parameter: node-arch");
     runScript("bash", "install.sh", version, mirror);
   }
 })();
